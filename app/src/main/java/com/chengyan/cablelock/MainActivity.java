@@ -26,70 +26,18 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     Ringtone ringtone = null;
-    TextView debug = null;
     Button stopButton = null;
-    private final static int AUDIO_PERMISSION_REQUEST_CODE = 1;
-    private final static int VIBRATE_PERMISSION_REQUEST_CODE = 1;
-    String mediaFile = null;
+    Button enableButton = null;
+    boolean alarmEnabled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        debug = findViewById(R.id.debug);
-
-        //checkPermissions();
         setupPowerEventReceiver();
         setupStopButton();
-
-    }
-
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MODIFY_AUDIO_SETTINGS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if( ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.MODIFY_AUDIO_SETTINGS) ) {
-                Toast.makeText(this, "Allow this app to modify alert audio settings", Toast.LENGTH_SHORT).show();
-            }
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.MODIFY_AUDIO_SETTINGS},
-                    AUDIO_PERMISSION_REQUEST_CODE);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if( ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.VIBRATE) ) {
-                Toast.makeText(this, "Allow this app vibrate on alert", Toast.LENGTH_SHORT).show();
-            }
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{ Manifest.permission.VIBRATE},
-                    VIBRATE_PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        if (requestCode == VIBRATE_PERMISSION_REQUEST_CODE || requestCode == AUDIO_PERMISSION_REQUEST_CODE ) {
-            // If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Request canceled!", Toast.LENGTH_SHORT).show();
-            }
-        }
-        else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
+        setupEnableButton();
     }
 
     private void setupStopButton() {
@@ -100,6 +48,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 stopAlert();
+            }
+        });
+    }
+
+    private void setupEnableButton() {
+        enableButton = findViewById(R.id.EnableButton);
+
+        enableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if( alarmEnabled ) {
+                    enableButton.setText("Alarm Disabled");
+                    alarmEnabled = false;
+                }
+                else {
+                    enableButton.setText("Alarm Enabled");
+                    alarmEnabled = true;
+                }
             }
         });
     }
@@ -116,13 +82,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void playAudio() {
+        if( !alarmEnabled ) {
+            return;
+        }
         try {
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 20, AudioManager.FLAG_VIBRATE);
 
             ringtone = RingtoneManager.getRingtone(getApplicationContext(),
                     RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
-            ringtone.setVolume((float) 20);
             ringtone.setLooping(true);
             ringtone.play();
         } catch (Exception e) {
