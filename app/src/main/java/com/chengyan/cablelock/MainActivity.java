@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     private void setupPowerEventReceiver() {
         final BroadcastReceiver usbDisconnectReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                stopButton.setEnabled(true);
                 playAudio();
             }
         };
@@ -85,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         if( !alarmEnabled ) {
             return;
         }
+
+        stopButton.setEnabled(true);
         try {
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 20, AudioManager.FLAG_VIBRATE);
