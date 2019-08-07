@@ -73,7 +73,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="71" />
+                                                <entry key="scalingPercent" value="99" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -94,7 +94,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="C:\android\usb-lock-2.jpg" />
+                                      <entry key="foregroundImage" value="C:\android\usb-lock.jpg" />
+                                      <entry key="outputName" value="background_image" />
                                     </map>
                                   </option>
                                 </PersistentState>
