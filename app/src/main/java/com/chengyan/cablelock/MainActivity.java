@@ -1,26 +1,22 @@
 package com.chengyan.cablelock;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Spinner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,15 +25,43 @@ public class MainActivity extends AppCompatActivity {
     Button stopButton = null;
     Button enableButton = null;
     boolean alarmEnabled = true;
+    Map<String, Integer> alarmValueMap = new HashMap(){{
+       put("Ring Tone", RingtoneManager.TYPE_RINGTONE) ;
+       put("Notification", RingtoneManager.TYPE_NOTIFICATION);
+       put("Alarm", RingtoneManager.TYPE_ALARM);
+    }};
+    String alarmName = "Notification";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupAlarmSelection();
         setupPowerEventReceiver();
         setupStopButton();
         setupEnableButton();
+    }
+
+    private void setupAlarmSelection() {
+        Spinner alarmSelector = (Spinner) findViewById(R.id.AlarmSelector);
+        ArrayAdapter<CharSequence> valueAdapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
+        for(String name : alarmValueMap.keySet() ) {
+            valueAdapter.add( name );
+        }
+        alarmSelector.setAdapter(valueAdapter);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+                alarmName = (String) parent.getItemAtPosition(position);
+            }
+
+            public void onNothingSelected (AdapterView<?> parent) {
+
+            }
+        };
+
+        alarmSelector.setOnItemSelectedListener(itemSelectedListener);
     }
 
     private void setupStopButton() {
@@ -91,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 20, AudioManager.FLAG_VIBRATE);
 
             ringtone = RingtoneManager.getRingtone(getApplicationContext(),
-                    RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
+                    RingtoneManager.getDefaultUri(alarmValueMap.get(alarmName)));
             ringtone.setLooping(true);
             ringtone.play();
         } catch (Exception e) {
