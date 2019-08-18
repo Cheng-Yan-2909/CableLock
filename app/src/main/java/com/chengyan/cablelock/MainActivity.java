@@ -21,31 +21,13 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AlarmPlayer alarmPlayer = null;
-    private UsbEventHandler usbEventHandler = null;
-    private UIHandler uiHandler = null;
-
-    public AlarmPlayer getAlarmPlayer() {
-        return alarmPlayer;
-    }
-
-    public UIHandler getUIHandler() {
-        return uiHandler;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        alarmPlayer = new AlarmPlayer(this);
-        uiHandler = new UIHandler(this);
-
-        setupUsbDisconnectReceiver();
-    }
-
-    private void setupUsbDisconnectReceiver() {
-        usbEventHandler = new UsbEventHandler(this);
-        usbEventHandler.setupUsbDisconnectReceiver();
+        AlarmPlayer.init(this);
+        UIHandler.init(this);
+        UsbEventHandler.init(this);
     }
 }

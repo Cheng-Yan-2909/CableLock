@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.chengyan.cablelock.exception.ObjectNotInitializedException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,10 +20,28 @@ public class UIHandler {
     private Button enableButton = null;
     private boolean alarmEnabled = true;
     private UserAlarmOption userAlarmOption = null;
+    private static UIHandler self = null;
 
-    public UIHandler(MainActivity mainActivity) {
+    public static UIHandler init(MainActivity mainActivity) {
+        if( null == self ) {
+            self = new UIHandler(mainActivity);
+        }
+        return self;
+    }
+
+    public static UIHandler getInstance() {
+        if( null == self ) {
+            throw new ObjectNotInitializedException("UIHandler not initialized");
+        }
+        return self;
+    }
+
+    private UIHandler(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        configureUI();
+    }
 
+    private void configureUI() {
         userAlarmOption = new UserAlarmOption();
 
         setupStopButton();
@@ -31,12 +51,6 @@ public class UIHandler {
     public boolean isAlarmEnabled() {
         return alarmEnabled;
     }
-
-    public Button getStopButton() {
-        return stopButton;
-    }
-
-    public Button getEnableButton() {return enableButton; }
 
     public void enableStopButton() {
         stopButton.setEnabled(true);
@@ -53,7 +67,7 @@ public class UIHandler {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.getAlarmPlayer().stopAlert();
+                AlarmPlayer.getInstance().stopAlert();
                 stopButton.setEnabled(false);
             }
         });

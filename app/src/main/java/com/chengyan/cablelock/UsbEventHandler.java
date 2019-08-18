@@ -5,15 +5,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.chengyan.cablelock.exception.ObjectNotInitializedException;
+
 public class UsbEventHandler {
 
     private MainActivity mainActivity = null;
+    private static UsbEventHandler self = null;
 
-    public UsbEventHandler(MainActivity mainActivity) {
+    public static UsbEventHandler init(MainActivity mainActivity) {
+        if( null == self ) {
+            self = new UsbEventHandler(mainActivity);
+            self.setupUsbDisconnectReceiver();
+        }
+        return self;
+    }
+
+    public static UsbEventHandler getInstance() {
+        if( null == self ) {
+            throw new ObjectNotInitializedException("UsbEventHandler not initialized");
+        }
+
+        return self;
+    }
+
+    private UsbEventHandler(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
-    public void setupUsbDisconnectReceiver() {
+    private void setupUsbDisconnectReceiver() {
         final BroadcastReceiver usbDisconnectReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
                 playAudio();
@@ -24,11 +43,11 @@ public class UsbEventHandler {
     }
 
     private void playAudio() {
-        if( !mainActivity.getUIHandler().isAlarmEnabled() ) {
+        if( !UIHandler.getInstance().isAlarmEnabled() ) {
             return;
         }
 
-        mainActivity.getUIHandler().enableStopButton();
-        mainActivity.getAlarmPlayer().soundAlarm();
+        UIHandler.getInstance().enableStopButton();
+        AlarmPlayer.getInstance().soundAlarm();
     }
 }
