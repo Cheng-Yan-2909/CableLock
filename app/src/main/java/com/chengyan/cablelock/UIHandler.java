@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
 
@@ -19,6 +20,7 @@ public class UIHandler {
     private Button stopButton = null;
     private Button enableButton = null;
     private boolean alarmEnabled = true;
+    private TextView debug = null;
     private UserAlarmOption userAlarmOption = null;
     private static UIHandler self = null;
 
@@ -46,6 +48,7 @@ public class UIHandler {
 
         setupStopButton();
         setupEnableButton();
+        setupDebugOutput();
     }
 
     public boolean isAlarmEnabled() {
@@ -58,6 +61,32 @@ public class UIHandler {
 
     public int getAlarmName() {
         return userAlarmOption.getAlarmName();
+    }
+
+    public static void debug(String s) {
+        if( null == self ) {
+            return;
+        }
+        if( null == self.debug ) {
+            return;
+        }
+
+        try {
+            s = self.debug.getText() + s;
+            self.debug.setText(s);
+        }
+        catch(Exception e) {
+
+        }
+    }
+
+    public static void debugln(String s) {
+        debug(s + "\n");
+    }
+
+    private void setupDebugOutput() {
+        //debug = mainActivity.findViewById(R.id.DebugOutput);
+        debug.setText("Debug enabled");
     }
 
     private void setupStopButton() {

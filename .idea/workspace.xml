@@ -48,14 +48,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="817db03e-f795-4561-99c0-5db9688db998" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/exception/ObjectNotInitializedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/AlarmPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/AlarmPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,17 +103,18 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/chengyan/cablelock/BuildConfig.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/UserAlarmOption.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UserAlarmOption.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/exception/ObjectNotInitializedException.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/AlarmPlayer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" />
       </list>
     </option>
   </component>
@@ -129,49 +129,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="CableLock" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CableLock" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="CableLock" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CableLock" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-              <item name="com.chengyan.cablelock" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-              <item name="com.chengyan.cablelock" type="1f31426a:PackageElementNode" />
-              <item name="exception" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-              <item name="layout" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
           <expand>
@@ -281,6 +238,49 @@
               <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="CableLock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CableLock" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="CableLock" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CableLock" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="com.chengyan.cablelock" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="com.chengyan.cablelock" type="1f31426a:PackageElementNode" />
+              <item name="exception" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="CableLock" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="layout" type="1f31426a:PackageElementNode" />
             </path>
           </expand>
           <select />
@@ -418,8 +418,8 @@
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.28805238" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.28805238" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Thumbnails" order="9" weight="0.328594" />
       <window_info anchor="bottom" id="Find" order="10" weight="0.3289689" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -526,10 +526,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UserAlarmOption.java" />
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -539,17 +535,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -560,9 +549,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/AlarmPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="68">
           <caret line="9" column="24" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -570,37 +569,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
+        <state relative-caret-position="413">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#920#921#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="58" column="40" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1061#2216#0" expanded="true" />
+            <element signature="e#2215#2216#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="95" column="44" lean-forward="true" selection-start-line="95" selection-start-column="44" selection-end-line="95" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1313#1314#0" expanded="true" />
-            <element signature="e#1348#1349#0" expanded="true" />
-            <element signature="e#1386#1387#0" expanded="true" />
-            <element signature="e#1429#1430#0" expanded="true" />
-            <element signature="e#1462#1463#0" expanded="true" />
-            <element signature="e#1515#1516#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="390">
+          <caret line="87" column="10" selection-start-line="87" selection-start-column="10" selection-end-line="87" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

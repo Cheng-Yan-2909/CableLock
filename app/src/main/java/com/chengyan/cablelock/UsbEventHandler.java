@@ -15,7 +15,6 @@ public class UsbEventHandler {
     public static UsbEventHandler init(MainActivity mainActivity) {
         if( null == self ) {
             self = new UsbEventHandler(mainActivity);
-            self.setupUsbDisconnectReceiver();
         }
         return self;
     }
@@ -30,6 +29,7 @@ public class UsbEventHandler {
 
     private UsbEventHandler(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        setupUsbDisconnectReceiver();
     }
 
     private void setupUsbDisconnectReceiver() {

@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AlarmPlayer.init(this);
         UIHandler.init(this);
+        AlarmPlayer.init(this);
         UsbEventHandler.init(this);
+        BatteryStatus.init(this);
     }
 }
