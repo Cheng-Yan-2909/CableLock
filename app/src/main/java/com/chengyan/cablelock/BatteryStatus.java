@@ -37,6 +37,8 @@ public class BatteryStatus {
     private void configureBatteryEvent() {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             public void onReceive (Context context, Intent intent) {
+                UIHandler.debugClr();
+
                 try {
                     for (String v : batteryStatus.getCategories()) {
                         UIHandler.debugln(v);

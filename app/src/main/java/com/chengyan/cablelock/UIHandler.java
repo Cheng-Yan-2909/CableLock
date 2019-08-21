@@ -64,10 +64,7 @@ public class UIHandler {
     }
 
     public static void debug(String s) {
-        if( null == self ) {
-            return;
-        }
-        if( null == self.debug ) {
+        if( isDebugEnabled() ) {
             return;
         }
 
@@ -84,9 +81,32 @@ public class UIHandler {
         debug(s + "\n");
     }
 
+    public static void debugClr() {
+        if( isDebugEnabled() ) {
+            return;
+        }
+        try {
+            self.debug.setText("");
+        }
+        catch(Exception e) {
+
+        }
+    }
+
+    private static boolean isDebugEnabled() {
+        if( null == self ) {
+            return false;
+        }
+        if( null == self.debug ) {
+            return false;
+        }
+
+        return true;
+    }
+
     private void setupDebugOutput() {
         //debug = mainActivity.findViewById(R.id.DebugOutput);
-        debug.setText("Debug enabled");
+        //debug.setText("Debug enabled");
     }
 
     private void setupStopButton() {
