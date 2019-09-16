@@ -64,7 +64,7 @@ public class UIHandler {
     }
 
     public static void debug(String s) {
-        if( isDebugEnabled() ) {
+        if( !isDebugEnabled() ) {
             return;
         }
 
@@ -82,7 +82,7 @@ public class UIHandler {
     }
 
     public static void debugClr() {
-        if( isDebugEnabled() ) {
+        if( !isDebugEnabled() ) {
             return;
         }
         try {
@@ -105,8 +105,8 @@ public class UIHandler {
     }
 
     private void setupDebugOutput() {
-        //debug = mainActivity.findViewById(R.id.DebugOutput);
-        //debug.setText("Debug enabled");
+        debug = mainActivity.findViewById(R.id.DebugOutput);
+        debug.setText("Debug enabled\n");
     }
 
     private void setupStopButton() {
@@ -135,6 +135,7 @@ public class UIHandler {
                 else {
                     enableButton.setText("Alarm Enabled");
                     alarmEnabled = true;
+                    WifiEventHandler.getInstance().requestWifiScan();
                 }
             }
         });

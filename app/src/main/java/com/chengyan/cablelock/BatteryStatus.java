@@ -66,7 +66,7 @@ public class BatteryStatus {
                 }
             }
         };
-        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        batteryStatus = mainActivity.registerReceiver(broadcastReceiver, ifilter);
+        //IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        //batteryStatus = mainActivity.registerReceiver(broadcastReceiver, ifilter);
     }
 }
