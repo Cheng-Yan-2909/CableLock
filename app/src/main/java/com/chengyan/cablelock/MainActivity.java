@@ -20,8 +20,28 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmPlayer.init(this);
         UsbEventHandler.init(this);
-        //BatteryStatus.init(this);
         WifiEventHandler.init(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        UIHandler.getInstance().setupAlarmSelection();
+
+        if( WifiEventHandler.getInstance().gotAllPermissions() ) {
+            WifiEventHandler.getInstance().requestWifiScan();
+        }
+        else {
+            WifiEventHandler.getInstance().configPermission();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
+        if (!WifiEventHandler.getInstance().onRequestPermissionsResult(requestCode, permissions, results)) {
+            super.onRequestPermissionsResult(requestCode, permissions, results);
+        }
     }
 }
 

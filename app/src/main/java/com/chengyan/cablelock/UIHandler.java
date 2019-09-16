@@ -141,6 +141,10 @@ public class UIHandler {
         });
     }
 
+    public void setupAlarmSelection() {
+        userAlarmOption.setupAlarmSelection();
+    }
+
     public class UserAlarmOption {
 
         private Map<String, Integer> alarmValueMap = new HashMap(){{
@@ -148,6 +152,8 @@ public class UIHandler {
             put("Notification", RingtoneManager.TYPE_NOTIFICATION);
             put("Alarm", RingtoneManager.TYPE_ALARM);
         }};
+
+        private int position = -1;
 
         private String alarmName = "Notification";
 
@@ -163,8 +169,13 @@ public class UIHandler {
             }
             alarmSelector.setAdapter(valueAdapter);
 
+            if( position > -1 ) {
+                alarmSelector.setSelection(position);
+            }
+
             AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+                public void onItemSelected (AdapterView<?> parent, View view, int _position_, long id) {
+                    position = _position_;
                     alarmName = (String) parent.getItemAtPosition(position);
                 }
 
