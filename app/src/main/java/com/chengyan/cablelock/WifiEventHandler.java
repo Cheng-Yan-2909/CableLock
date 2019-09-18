@@ -1,6 +1,5 @@
 package com.chengyan.cablelock;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +9,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-
 import androidx.core.app.ActivityCompat;
-
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
-
-import java.util.ArrayList;
 import java.util.List;
+import android.net.wifi.WifiInfo;
 
 public class WifiEventHandler extends EventHandler {
 
@@ -71,23 +67,52 @@ public class WifiEventHandler extends EventHandler {
         setupWifiEvent();
     }
 
-    private void getCurrentConnectivityInfo() {
-        ConnectivityManager cm =
-                (ConnectivityManager) mainActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-    }
-
     private void setupWifiEvent() {
         UIHandler.debugln("WiFi event setup...");
+        setupWifiScanResultReceiver();
+        setupNetworkIDChangedReceiver();
+        setupNetworkStateChangedReceiver();
+        setupWifiStateChangedReceiver();
+    }
 
+    private void setupNetworkIDChangedReceiver() {
+
+        final BroadcastReceiver wifiEventReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                dumpWifiInfo(intent);
+            }
+        };
+        mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.NETWORK_IDS_CHANGED_ACTION));
+    }
+
+    private void setupNetworkStateChangedReceiver() {
+
+        final BroadcastReceiver wifiEventReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                dumpWifiInfo(intent);
+            }
+        };
+        mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+    }
+
+    private void setupWifiStateChangedReceiver() {
+
+        final BroadcastReceiver wifiEventReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                dumpWifiInfo(intent);
+            }
+        };
+        mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
+    }
+
+    private void setupWifiScanResultReceiver() {
         BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
-                boolean success = intent.getBooleanExtra(
-                        WifiManager.EXTRA_RESULTS_UPDATED, false);
+                UIHandler.debugln(intent.getAction());
                 processScanResult();
             }
         };
@@ -131,6 +156,14 @@ public class WifiEventHandler extends EventHandler {
         }
 
         return true;
+    }
+
+    private void dumpWifiInfo(Intent intent) {
+        UIHandler.debugln(intent.getAction());
+        UIHandler.debugln("WiFi info:");
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        UIHandler.debugln( "SSID: " + wifiInfo.getSSID());
+        UIHandler.debugln( "wifi info toString:\n" + wifiInfo + "\n==============\n" );
     }
 
     private void processScanResult() {
