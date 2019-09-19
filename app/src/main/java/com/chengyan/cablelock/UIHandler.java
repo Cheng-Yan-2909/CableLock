@@ -1,7 +1,9 @@
 package com.chengyan.cablelock;
 
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -106,7 +108,13 @@ public class UIHandler {
 
     private void setupDebugOutput() {
         debug = mainActivity.findViewById(R.id.DebugOutput);
-        debug.setText("Debug enabled\n");
+        if( Build.ID.equals("PPWS29.69-39-2-4") ) {
+            debug.setText("Debug enabled\n");
+        }
+        else {
+            ((ViewGroup) debug.getParent()).removeView(debug);
+            debug = null;
+        }
     }
 
     private void setupStopButton() {

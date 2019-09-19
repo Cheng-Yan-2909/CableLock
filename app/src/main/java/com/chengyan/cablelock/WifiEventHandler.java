@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
 import java.util.List;
 import android.net.wifi.WifiInfo;
+import android.os.Build;
 
 public class WifiEventHandler extends EventHandler {
 
@@ -46,6 +47,12 @@ public class WifiEventHandler extends EventHandler {
 
     public void requestWifiScan() {
         UIHandler.debugClr();
+        UIHandler.debugln("ID: " + Build.ID);
+        UIHandler.debugln("MODEL: " + Build.MODEL);
+        UIHandler.debugln("DISPLAY: " + Build.DISPLAY);
+        UIHandler.debugln("HOST: " + Build.HOST);
+        UIHandler.debugln("PRODUCT: " + Build.PRODUCT);
+        UIHandler.debugln("DEVICE: " + Build.DEVICE);
         UIHandler.debugln("Request WiFi scan");
 
         configPermission();
