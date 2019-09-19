@@ -22,8 +22,9 @@ public class UIHandler {
     private Button stopButton = null;
     private Button enableButton = null;
     private boolean alarmEnabled = true;
-    private TextView debug = null;
+
     private UserAlarmOption userAlarmOption = null;
+    private DebugStuff debugStuff = null;
     private static UIHandler self = null;
 
     public static UIHandler init(MainActivity mainActivity) {
@@ -50,7 +51,7 @@ public class UIHandler {
 
         setupStopButton();
         setupEnableButton();
-        setupDebugOutput();
+        debugStuff = new DebugStuff();
     }
 
     public boolean isAlarmEnabled() {
@@ -66,55 +67,15 @@ public class UIHandler {
     }
 
     public static void debug(String s) {
-        if( !isDebugEnabled() ) {
-            return;
-        }
-
-        try {
-            s = self.debug.getText() + s;
-            self.debug.setText(s);
-        }
-        catch(Exception e) {
-
-        }
+        self.debugStuff.debug(s);
     }
 
     public static void debugln(String s) {
-        debug(s + "\n");
+        self.debugStuff.debugln(s);
     }
 
     public static void debugClr() {
-        if( !isDebugEnabled() ) {
-            return;
-        }
-        try {
-            self.debug.setText("");
-        }
-        catch(Exception e) {
-
-        }
-    }
-
-    private static boolean isDebugEnabled() {
-        if( null == self ) {
-            return false;
-        }
-        if( null == self.debug ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private void setupDebugOutput() {
-        debug = mainActivity.findViewById(R.id.DebugOutput);
-        if( Build.ID.equals("PPWS29.69-39-2-4") ) {
-            debug.setText("Debug enabled\n");
-        }
-        else {
-            ((ViewGroup) debug.getParent()).removeView(debug);
-            debug = null;
-        }
+        self.debugStuff.debugClr();
     }
 
     private void setupStopButton() {
@@ -153,7 +114,7 @@ public class UIHandler {
         userAlarmOption.setupAlarmSelection();
     }
 
-    public class UserAlarmOption {
+    private class UserAlarmOption {
 
         private Map<String, Integer> alarmValueMap = new HashMap(){{
             put("Ring Tone", RingtoneManager.TYPE_RINGTONE) ;
@@ -197,6 +158,84 @@ public class UIHandler {
 
         private int getAlarmName() {
             return alarmValueMap.get(alarmName);
+        }
+    }
+
+    private class DebugStuff {
+        private TextView debug = null;
+        private Button debugButton = null;
+
+        private DebugStuff() {
+            setupDebugOutput();
+            setupDebugButton();
+        }
+
+        private void debug(String s) {
+            if( !isDebugEnabled() ) {
+                return;
+            }
+
+            try {
+                s = debug.getText() + s;
+                debug.setText(s);
+            }
+            catch(Exception e) {
+
+            }
+        }
+
+        private void debugln(String s) {
+            debug(s + "\n");
+        }
+
+        private void debugClr() {
+            if( !isDebugEnabled() ) {
+                return;
+            }
+            try {
+                debug.setText("");
+            }
+            catch(Exception e) {
+
+            }
+        }
+
+        private boolean isDebugEnabled() {
+            if( null == self ) {
+                return false;
+            }
+            if( null == debug ) {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void setupDebugButton() {
+            debugButton = mainActivity.findViewById(R.id.DebugButton);
+
+            debugButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( debug.getVisibility() == View.VISIBLE ) {
+                        debug.setVisibility(View.INVISIBLE);
+                    }
+                    else {
+                        debug.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
+
+        private void setupDebugOutput() {
+            debug = mainActivity.findViewById(R.id.DebugOutput);
+            if( Build.ID.equals("PPWS29.69-39-2-4") ) {
+                debug.setText("Debug enabled\n");
+            }
+            else {
+                ((ViewGroup) debug.getParent()).removeView(debug);
+                debug = null;
+            }
         }
     }
 }

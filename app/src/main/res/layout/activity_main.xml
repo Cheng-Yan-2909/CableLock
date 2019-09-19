@@ -129,4 +129,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
+    <Button
+        android:id="@+id/DebugButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Debug"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/EnableButton"
+        app:layout_constraintStart_toEndOf="@+id/StopButton"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
