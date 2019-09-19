@@ -75,7 +75,6 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void setupWifiEvent() {
-        UIHandler.debugln("WiFi event setup...");
         setupWifiScanResultReceiver();
         setupNetworkIDChangedReceiver();
         setupNetworkStateChangedReceiver();
@@ -127,8 +126,6 @@ public class WifiEventHandler extends EventHandler {
         mainActivity.registerReceiver(wifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
         requestWifiScan();
-
-        UIHandler.debugln("WiFi event setup: done");
     }
 
     public boolean gotAllPermissions() {
@@ -141,8 +138,6 @@ public class WifiEventHandler extends EventHandler {
     }
 
     public void configPermission() {
-        UIHandler.debugln("config permission");
-
         if (gotAllPermissions()) {
             UIHandler.debugln(android.Manifest.permission.CHANGE_WIFI_STATE + ": Permission granted");
         } else {

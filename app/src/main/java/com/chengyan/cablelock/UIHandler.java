@@ -214,28 +214,37 @@ public class UIHandler {
         private void setupDebugButton() {
             debugButton = mainActivity.findViewById(R.id.DebugButton);
 
-            debugButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if( debug.getVisibility() == View.VISIBLE ) {
-                        debug.setVisibility(View.INVISIBLE);
+            if( isOnDebugDevice() ) {
+                debugButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (debug.getVisibility() == View.VISIBLE) {
+                            debug.setVisibility(View.INVISIBLE);
+                        } else {
+                            debug.setVisibility(View.VISIBLE);
+                        }
                     }
-                    else {
-                        debug.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
+                });
+            }
+            else {
+                ((ViewGroup) debugButton.getParent()).removeView(debugButton);
+                debugButton = null;
+            }
         }
 
         private void setupDebugOutput() {
             debug = mainActivity.findViewById(R.id.DebugOutput);
-            if( Build.ID.equals("PPWS29.69-39-2-4") ) {
+            if( isOnDebugDevice() ) {
                 debug.setText("Debug enabled\n");
             }
             else {
                 ((ViewGroup) debug.getParent()).removeView(debug);
                 debug = null;
             }
+        }
+
+        private boolean isOnDebugDevice() {
+            return Build.ID.equals("PPWS29.69-39-2-4");
         }
     }
 }
