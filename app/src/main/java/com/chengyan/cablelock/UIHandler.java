@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UIHandler {
@@ -158,6 +160,21 @@ public class UIHandler {
 
         private int getAlarmName() {
             return alarmValueMap.get(alarmName);
+        }
+    }
+
+    private class AlarmTriggerBy {
+
+        private AlarmTriggerBy() {
+
+        }
+
+        private List<String> getAlarmTriggerOptions() {
+            List<String> triggerOptionList = new ArrayList() {{
+                add("USB");
+            }};
+
+            return triggerOptionList;
         }
     }
 
