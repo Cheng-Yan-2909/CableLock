@@ -43,6 +43,10 @@ public class WifiEventHandler extends EventHandler {
         return self;
     }
 
+    public void updateUI() {
+        requestWifiScan();
+    }
+
     public void requestWifiScan() {
         UIHandler.debugClr();
         UIHandler.debugln("ID: " + Build.ID);
@@ -176,7 +180,12 @@ public class WifiEventHandler extends EventHandler {
             UIHandler.debugln(sr.SSID + " -- " + sr.toString() + "\n==============");
         }
 
-        UIHandler.getInstance().getAlarmTriggerBy().update(scanResults);
+        try {
+            UIHandler.getInstance().getAlarmTriggerBy().update(scanResults);
+        }
+        catch(ObjectNotInitializedException e) {
+            UIHandler.debugln("UIHandler not initialized");
+        }
     }
 
     public interface ScanResultRequester {

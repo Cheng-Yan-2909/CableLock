@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         AlarmPlayer.init(this);
         UsbEventHandler.init(this);
         WifiEventHandler.init(this);
+
+        WifiEventHandler.getInstance().updateUI();
     }
 
     @Override
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             WifiEventHandler.getInstance().configPermission();
         }
+
+        WifiEventHandler.getInstance().updateUI();
     }
 
     @Override
