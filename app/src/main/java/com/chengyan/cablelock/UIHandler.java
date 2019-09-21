@@ -1,6 +1,7 @@
 package com.chengyan.cablelock;
 
 import android.media.RingtoneManager;
+import android.net.wifi.ScanResult;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class UIHandler {
 
     private UserAlarmOption userAlarmOption = null;
     private DebugStuff debugStuff = null;
+    private AlarmTriggerBy alarmTriggerBy = null;
     private static UIHandler self = null;
 
     public static UIHandler init(MainActivity mainActivity) {
@@ -49,11 +51,12 @@ public class UIHandler {
     }
 
     private void configureUI() {
+        debugStuff = new DebugStuff();
         userAlarmOption = new UserAlarmOption();
+        alarmTriggerBy = new AlarmTriggerBy();
 
         setupStopButton();
         setupEnableButton();
-        debugStuff = new DebugStuff();
     }
 
     public boolean isAlarmEnabled() {
@@ -78,6 +81,10 @@ public class UIHandler {
 
     public static void debugClr() {
         self.debugStuff.debugClr();
+    }
+
+    public AlarmTriggerBy getAlarmTriggerBy() {
+        return alarmTriggerBy;
     }
 
     private void setupStopButton() {
@@ -163,18 +170,43 @@ public class UIHandler {
         }
     }
 
-    private class AlarmTriggerBy {
+    public class AlarmTriggerBy implements WifiEventHandler.ScanResultRequester {
+        private int position;
+        private String alarmByName;
 
         private AlarmTriggerBy() {
-
+            updateAlarmOptionSelector(new ArrayList<String>(){{add("USB");}});
         }
 
-        private List<String> getAlarmTriggerOptions() {
-            List<String> triggerOptionList = new ArrayList() {{
-                add("USB");
-            }};
+        public void update(List<ScanResult> optionList) {
+            List<String> ssidList = new ArrayList();
+            for(ScanResult sr : optionList) {
+                ssidList.add(sr.SSID);
+            }
+            updateAlarmOptionSelector(ssidList);
+        }
 
-            return triggerOptionList;
+        private void updateAlarmOptionSelector(List<String> optionList) {
+            Spinner alarmBySelector = (Spinner) mainActivity.findViewById(R.id.AlarmBy);
+            ArrayAdapter<CharSequence> valueAdapter = new ArrayAdapter<CharSequence>(mainActivity, android.R.layout.simple_spinner_item);
+            valueAdapter.add( "USB" );
+            for(String name : optionList ) {
+                valueAdapter.add( name );
+            }
+            alarmBySelector.setAdapter(valueAdapter);
+
+            AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected (AdapterView<?> parent, View view, int _position_, long id) {
+                    position = _position_;
+                    alarmByName = (String) parent.getItemAtPosition(position);
+                }
+
+                public void onNothingSelected (AdapterView<?> parent) {
+
+                }
+            };
+
+            alarmBySelector.setOnItemSelectedListener(itemSelectedListener);
         }
     }
 

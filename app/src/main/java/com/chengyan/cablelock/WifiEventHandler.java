@@ -18,9 +18,7 @@ import android.os.Build;
 public class WifiEventHandler extends EventHandler {
 
     private final static int PERMISSION_CODE = 1;
-
     private static WifiEventHandler self = null;
-
     private final WifiManager wifiManager;
 
     private static final String[] permissionNameList = new String[] {
@@ -61,11 +59,12 @@ public class WifiEventHandler extends EventHandler {
             if (!wifiManager.startScan()) {
                 UIHandler.debugln("WifFi scan failed 2");
             }
+            else {
+            }
         }
         catch(Exception e) {
             UIHandler.debugln("Error scan: " + e.getMessage());
         }
-
     }
 
     private WifiEventHandler(MainActivity mainActivity) {
@@ -151,10 +150,12 @@ public class WifiEventHandler extends EventHandler {
             return false;
         }
 
-        if (results[0] == PackageManager.PERMISSION_GRANTED) {
-            requestWifiScan();
-        } else {
-            UIHandler.debugln("User declined permission");
+        if( null != results && results.length > 0 ) {
+            if (results[0] == PackageManager.PERMISSION_GRANTED) {
+                requestWifiScan();
+            } else {
+                UIHandler.debugln("User declined permission");
+            }
         }
 
         return true;
@@ -174,5 +175,11 @@ public class WifiEventHandler extends EventHandler {
         for(ScanResult sr : scanResults) {
             UIHandler.debugln(sr.SSID + " -- " + sr.toString() + "\n==============");
         }
+
+        UIHandler.getInstance().getAlarmTriggerBy().update(scanResults);
+    }
+
+    public interface ScanResultRequester {
+        void update(List<ScanResult> scanResults);
     }
 }
