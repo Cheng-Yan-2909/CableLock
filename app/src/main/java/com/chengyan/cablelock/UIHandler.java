@@ -3,7 +3,9 @@ package com.chengyan.cablelock;
 import android.media.RingtoneManager;
 import android.net.wifi.ScanResult;
 import android.os.Build;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +31,7 @@ public class UIHandler {
     private UserAlarmOption userAlarmOption = null;
     private DebugStuff debugStuff = null;
     private AlarmTriggerBy alarmTriggerBy = null;
+    private TitleText titleText = null;
     private static UIHandler self = null;
 
     public static UIHandler init(MainActivity mainActivity) {
@@ -52,6 +55,7 @@ public class UIHandler {
 
     private void configureUI() {
         debugStuff = new DebugStuff();
+        titleText = new TitleText();
         userAlarmOption = new UserAlarmOption();
         alarmTriggerBy = new AlarmTriggerBy();
 
@@ -85,6 +89,10 @@ public class UIHandler {
 
     public AlarmTriggerBy getAlarmTriggerBy() {
         return alarmTriggerBy;
+    }
+
+    public void showDebugTools() {
+        debugStuff.showDebug();
     }
 
     private void setupStopButton() {
@@ -215,8 +223,17 @@ public class UIHandler {
         private Button debugButton = null;
 
         private DebugStuff() {
+            stupDebug();
+        }
+
+        private void stupDebug() {
             setupDebugOutput();
             setupDebugButton();
+        }
+
+        private void showDebug() {
+            debug.setVisibility(View.VISIBLE);
+            debugButton.setVisibility(View.VISIBLE);
         }
 
         private void debug(String s) {
@@ -262,38 +279,53 @@ public class UIHandler {
 
         private void setupDebugButton() {
             debugButton = mainActivity.findViewById(R.id.DebugButton);
-
-            if( isOnDebugDevice() ) {
-                debugButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (debug.getVisibility() == View.VISIBLE) {
-                            debug.setVisibility(View.INVISIBLE);
-                        } else {
-                            debug.setVisibility(View.VISIBLE);
-                        }
+            debugButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (debug.getVisibility() == View.VISIBLE) {
+                        debug.setVisibility(View.INVISIBLE);
+                    } else {
+                        debug.setVisibility(View.VISIBLE);
                     }
-                });
-            }
-            else {
-                ((ViewGroup) debugButton.getParent()).removeView(debugButton);
-                debugButton = null;
-            }
+                }
+            });
+            debugButton.setVisibility(View.INVISIBLE);
         }
 
         private void setupDebugOutput() {
             debug = mainActivity.findViewById(R.id.DebugOutput);
-            if( isOnDebugDevice() ) {
-                debug.setText("Debug enabled\n");
-            }
-            else {
-                ((ViewGroup) debug.getParent()).removeView(debug);
-                debug = null;
-            }
+            debug.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private class TitleText {
+        private int touchCount = 0;
+        private long lastTouchTime = System.currentTimeMillis();
+        private long timeoutTouch = 1000; // one sec
+
+        private TitleText() {
+            setupTitleText();
         }
 
-        private boolean isOnDebugDevice() {
-            return Build.ID.equals("PPWS29.69-39-2-4");
+        private void setupTitleText() {
+            TextView title = mainActivity.findViewById(R.id.TitleView);
+            OnTouchListener touchListener = new OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    if( event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        if( System.currentTimeMillis() > lastTouchTime + timeoutTouch)  {
+                            touchCount = 0;
+                        }
+                        touchCount++;
+                        lastTouchTime = System.currentTimeMillis();
+
+                        if (touchCount > 10) {
+                            showDebugTools();
+                        }
+                    }
+                    return true;
+                }
+            };
+            title.setOnTouchListener(touchListener);
         }
     }
 }
