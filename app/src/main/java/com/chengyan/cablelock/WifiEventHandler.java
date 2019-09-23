@@ -136,7 +136,7 @@ public class WifiEventHandler extends EventHandler {
         requestWifiScan();
     }
 
-    private boolean gotAllPermissions() {
+    public boolean gotAllPermissions() {
         for(String perm : permissionNameList ) {
             if( ActivityCompat.checkSelfPermission(mainActivity.getApplicationContext(), perm) != PackageManager.PERMISSION_GRANTED ) {
                 return false;
@@ -145,7 +145,7 @@ public class WifiEventHandler extends EventHandler {
         return true;
     }
 
-    private void configPermission() {
+    public void configPermission() {
         if (gotAllPermissions()) {
             UIHandler.debugln(android.Manifest.permission.CHANGE_WIFI_STATE + ": Permission granted");
         } else {
