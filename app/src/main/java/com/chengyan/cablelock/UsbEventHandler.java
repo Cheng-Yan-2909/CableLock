@@ -34,7 +34,9 @@ public class UsbEventHandler extends EventHandler {
     private void setupUsbDisconnectReceiver() {
         final BroadcastReceiver usbDisconnectReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                playAudio();
+                if( UIHandler.getInstance().isAlarmByUsb() ) {
+                    playAudio();
+                }
             }
         };
 

@@ -51,10 +51,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="817db03e-f795-4561-99c0-5db9688db998" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/WifiEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/WifiEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,38 +80,7 @@
     <favorites_list name="CableLock" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="195" lean-forward="true" selection-start-line="195" selection-end-line="195" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3619#3620#0" expanded="true" />
-                <element signature="e#3673#3674#0" expanded="true" />
-                <element signature="e#6893#6894#0" expanded="true" />
-                <element signature="e#6935#6936#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/WifiEventHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="183" column="70" selection-start-line="183" selection-start-column="70" selection-end-line="183" selection-end-column="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1498#1499#0" expanded="true" />
-                <element signature="e#1531#1532#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -123,6 +94,7 @@
       <find>AlarmPlayer</find>
       <find>UserAlarmOption</find>
       <find>showDebugTools</find>
+      <find>gotAllPermissions</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -150,11 +122,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/WifiEventHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/EventHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/EventHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/BatteryStatus.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/WifiEventHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java" />
       </list>
@@ -452,7 +424,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.502455" side_tool="true" visible="true" weight="0.20045386" />
       <window_info id="Structure" order="1" sideWeight="0.5008183" side_tool="true" weight="0.3290469" />
@@ -636,18 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="38" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#980#1126#0" expanded="true" />
-            <element signature="e#1125#1126#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -662,28 +621,40 @@
       <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/WifiEventHandler.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="183" column="70" selection-start-line="183" selection-start-column="70" selection-end-line="183" selection-end-column="70" />
+        <state relative-caret-position="394">
+          <caret line="221" column="79" selection-start-line="221" selection-start-column="79" selection-end-line="221" selection-end-column="79" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1498#1499#0" expanded="true" />
-            <element signature="e#1531#1532#0" expanded="true" />
+            <element signature="e#3550#3551#0" expanded="true" />
+            <element signature="e#3586#3587#0" expanded="true" />
+            <element signature="e#7122#7123#0" expanded="true" />
+            <element signature="e#7165#7166#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UIHandler.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/UsbEventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="195" lean-forward="true" selection-start-line="195" selection-end-line="195" />
+        <state relative-caret-position="326">
+          <caret line="38" column="17" lean-forward="true" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3619#3620#0" expanded="true" />
-            <element signature="e#3673#3674#0" expanded="true" />
-            <element signature="e#6893#6894#0" expanded="true" />
-            <element signature="e#6935#6936#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengyan/cablelock/WifiEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1561#1562#0" expanded="true" />
+            <element signature="e#1600#1601#0" expanded="true" />
+            <element signature="e#1498#1499#0" expanded="true" />
+            <element signature="e#1531#1532#0" expanded="true" />
           </folding>
         </state>
       </provider>

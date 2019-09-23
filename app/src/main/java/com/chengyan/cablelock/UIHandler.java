@@ -127,6 +127,10 @@ public class UIHandler {
         return alarmTriggerBy.getAlarmByName();
     }
 
+    public boolean isAlarmByUsb() {
+        return alarmTriggerBy.isAlarmByUsb();
+    }
+
     public void updateAlarmByWifiNames(List<ScanResult> optionList) {
         alarmTriggerBy.update(optionList);
     }
@@ -186,7 +190,7 @@ public class UIHandler {
         }
     }
 
-    private class AlarmTriggerBy implements WifiEventHandler.ScanResultRequester {
+    private class AlarmTriggerBy {
         private int position;
         private String alarmByName;
 
@@ -194,7 +198,7 @@ public class UIHandler {
             updateAlarmOptionSelector(new ArrayList<String>(){{add("USB");}});
         }
 
-        public void update(List<ScanResult> optionList) {
+        private void update(List<ScanResult> optionList) {
             List<String> ssidList = new ArrayList();
             for(ScanResult sr : optionList) {
                 ssidList.add(sr.SSID);
@@ -215,6 +219,7 @@ public class UIHandler {
                 public void onItemSelected (AdapterView<?> parent, View view, int _position_, long id) {
                     position = _position_;
                     alarmByName = (String) parent.getItemAtPosition(position);
+                    WifiEventHandler.getInstance().resetMissingWifiSsidCount();
                 }
 
                 public void onNothingSelected (AdapterView<?> parent) {
@@ -227,6 +232,10 @@ public class UIHandler {
 
         private String getAlarmByName() {
             return alarmByName;
+        }
+
+        private boolean isAlarmByUsb() {
+            return position == 0;
         }
     }
 

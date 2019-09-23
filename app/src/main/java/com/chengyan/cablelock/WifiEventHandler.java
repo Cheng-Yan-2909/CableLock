@@ -20,6 +20,7 @@ public class WifiEventHandler extends EventHandler {
     private final static int PERMISSION_CODE = 1;
     private static WifiEventHandler self = null;
     private final WifiManager wifiManager;
+    private int missingWifiSsidCount = 0;
 
     private static final String[] permissionNameList = new String[] {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -41,6 +42,10 @@ public class WifiEventHandler extends EventHandler {
         }
 
         return self;
+    }
+
+    public void resetMissingWifiSsidCount() {
+        missingWifiSsidCount = 0;
     }
 
     public void updateUI() {
@@ -131,7 +136,7 @@ public class WifiEventHandler extends EventHandler {
         requestWifiScan();
     }
 
-    public boolean gotAllPermissions() {
+    private boolean gotAllPermissions() {
         for(String perm : permissionNameList ) {
             if( ActivityCompat.checkSelfPermission(mainActivity.getApplicationContext(), perm) != PackageManager.PERMISSION_GRANTED ) {
                 return false;
@@ -140,7 +145,7 @@ public class WifiEventHandler extends EventHandler {
         return true;
     }
 
-    public void configPermission() {
+    private void configPermission() {
         if (gotAllPermissions()) {
             UIHandler.debugln(android.Manifest.permission.CHANGE_WIFI_STATE + ": Permission granted");
         } else {
@@ -176,8 +181,20 @@ public class WifiEventHandler extends EventHandler {
     private void processScanResult() {
         List<ScanResult> scanResults = wifiManager.getScanResults();
         UIHandler.debugln("WiFi result:");
+        boolean ssidFound = false;
         for(ScanResult sr : scanResults) {
             UIHandler.debugln(sr.SSID + " -- " + sr.toString() + "\n==============");
+            if( sr.SSID.equals(UIHandler.getInstance().getAlarmByName()) ) {
+                ssidFound = true;
+            }
+        }
+
+        if( UIHandler.getInstance().isAlarmByUsb() && ssidFound ) {
+            missingWifiSsidCount++;
+        }
+
+        if( missingWifiSsidCount > 4 ) {
+            playAudio();
         }
 
         try {
@@ -186,9 +203,5 @@ public class WifiEventHandler extends EventHandler {
         catch(ObjectNotInitializedException e) {
             UIHandler.debugln("UIHandler not initialized");
         }
-    }
-
-    public interface ScanResultRequester {
-        void update(List<ScanResult> scanResults);
     }
 }
