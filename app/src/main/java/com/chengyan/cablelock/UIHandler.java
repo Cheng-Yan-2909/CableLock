@@ -254,6 +254,7 @@ public class UIHandler {
 
         private void showDebug() {
             debug.setVisibility(View.VISIBLE);
+            debug.bringToFront();
             debugButton.setVisibility(View.VISIBLE);
         }
 
