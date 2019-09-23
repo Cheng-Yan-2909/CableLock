@@ -34,6 +34,18 @@ public class UIHandler {
     private TitleText titleText = null;
     private static UIHandler self = null;
 
+    public static void debug(String s) {
+        self.debugStuff.debug(s);
+    }
+
+    public static void debugln(String s) {
+        self.debugStuff.debugln(s);
+    }
+
+    public static void debugClr() {
+        self.debugStuff.debugClr();
+    }
+
     public static UIHandler init(MainActivity mainActivity) {
         if( null == self ) {
             self = new UIHandler(mainActivity);
@@ -61,38 +73,6 @@ public class UIHandler {
 
         setupStopButton();
         setupEnableButton();
-    }
-
-    public boolean isAlarmEnabled() {
-        return alarmEnabled;
-    }
-
-    public void enableStopButton() {
-        stopButton.setEnabled(true);
-    }
-
-    public int getAlarmName() {
-        return userAlarmOption.getAlarmName();
-    }
-
-    public static void debug(String s) {
-        self.debugStuff.debug(s);
-    }
-
-    public static void debugln(String s) {
-        self.debugStuff.debugln(s);
-    }
-
-    public static void debugClr() {
-        self.debugStuff.debugClr();
-    }
-
-    public AlarmTriggerBy getAlarmTriggerBy() {
-        return alarmTriggerBy;
-    }
-
-    public void showDebugTools() {
-        debugStuff.showDebug();
     }
 
     private void setupStopButton() {
@@ -127,9 +107,37 @@ public class UIHandler {
         });
     }
 
+    public boolean isAlarmEnabled() {
+        return alarmEnabled;
+    }
+
+    public void enableStopButton() {
+        stopButton.setEnabled(true);
+    }
+
+    public int getAlarmName() {
+        return userAlarmOption.getAlarmName();
+    }
+
     public void setupAlarmSelection() {
         userAlarmOption.setupAlarmSelection();
     }
+
+    public String getAlarmByName() {
+        return alarmTriggerBy.getAlarmByName();
+    }
+
+    public void updateAlarmByWifiNames(List<ScanResult> optionList) {
+        alarmTriggerBy.update(optionList);
+    }
+
+    private void showDebugTools() {
+        debugStuff.showDebug();
+    }
+
+    /*
+
+     */
 
     private class UserAlarmOption {
 
@@ -178,7 +186,7 @@ public class UIHandler {
         }
     }
 
-    public class AlarmTriggerBy implements WifiEventHandler.ScanResultRequester {
+    private class AlarmTriggerBy implements WifiEventHandler.ScanResultRequester {
         private int position;
         private String alarmByName;
 
@@ -215,6 +223,10 @@ public class UIHandler {
             };
 
             alarmBySelector.setOnItemSelectedListener(itemSelectedListener);
+        }
+
+        private String getAlarmByName() {
+            return alarmByName;
         }
     }
 

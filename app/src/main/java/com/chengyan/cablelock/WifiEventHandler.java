@@ -181,7 +181,7 @@ public class WifiEventHandler extends EventHandler {
         }
 
         try {
-            UIHandler.getInstance().getAlarmTriggerBy().update(scanResults);
+            UIHandler.getInstance().updateAlarmByWifiNames(scanResults);
         }
         catch(ObjectNotInitializedException e) {
             UIHandler.debugln("UIHandler not initialized");
