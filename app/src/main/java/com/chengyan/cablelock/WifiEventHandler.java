@@ -21,6 +21,7 @@ public class WifiEventHandler extends EventHandler {
     private static WifiEventHandler self = null;
     private final WifiManager wifiManager;
     private int missingWifiSsidCount = 0;
+    private List<ScanResult> scanResults;
 
     private static final String[] permissionNameList = new String[] {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -49,11 +50,17 @@ public class WifiEventHandler extends EventHandler {
     }
 
     public void updateUI() {
-        requestWifiScan();
+        try {
+            if( null != scanResults ) {
+                UIHandler.getInstance().updateAlarmByWifiNames(scanResults);
+            }
+        }
+        catch(ObjectNotInitializedException e) {
+            UIHandler.debugln("UIHandler not initialized");
+        }
     }
 
     public void requestWifiScan() {
-        UIHandler.debugClr();
         UIHandler.debugln("ID: " + Build.ID);
         UIHandler.debugln("MODEL: " + Build.MODEL);
         UIHandler.debugln("DISPLAY: " + Build.DISPLAY);
@@ -95,6 +102,7 @@ public class WifiEventHandler extends EventHandler {
             @Override
             public void onReceive(Context context, Intent intent) {
                 dumpWifiInfo(intent);
+                processScanResult();
             }
         };
         mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.NETWORK_IDS_CHANGED_ACTION));
@@ -106,6 +114,7 @@ public class WifiEventHandler extends EventHandler {
             @Override
             public void onReceive(Context context, Intent intent) {
                 dumpWifiInfo(intent);
+                processScanResult();
             }
         };
         mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
@@ -117,6 +126,7 @@ public class WifiEventHandler extends EventHandler {
             @Override
             public void onReceive(Context context, Intent intent) {
                 dumpWifiInfo(intent);
+                processScanResult();
             }
         };
         mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
@@ -179,7 +189,7 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void processScanResult() {
-        List<ScanResult> scanResults = wifiManager.getScanResults();
+        scanResults = wifiManager.getScanResults();
         UIHandler.debugln("WiFi result:");
         boolean ssidFound = false;
         for(ScanResult sr : scanResults) {
@@ -189,19 +199,15 @@ public class WifiEventHandler extends EventHandler {
             }
         }
 
-        if( UIHandler.getInstance().isAlarmByUsb() && ssidFound ) {
+        if( !UIHandler.getInstance().isAlarmByUsb() && ssidFound ) {
             missingWifiSsidCount++;
         }
 
-        if( missingWifiSsidCount > 4 ) {
-            playAudio();
-        }
+        UIHandler.debugln("alarm by: " + UIHandler.getInstance().getAlarmByName());
+        UIHandler.debugln("missingWifiSsidCount: " + missingWifiSsidCount);
 
-        try {
-            UIHandler.getInstance().updateAlarmByWifiNames(scanResults);
-        }
-        catch(ObjectNotInitializedException e) {
-            UIHandler.debugln("UIHandler not initialized");
+        if( missingWifiSsidCount > 1 ) {
+            playAudio();
         }
     }
 }

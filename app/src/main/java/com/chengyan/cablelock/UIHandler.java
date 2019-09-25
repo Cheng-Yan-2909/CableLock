@@ -342,6 +342,7 @@ public class UIHandler {
 
                         if (touchCount > 10) {
                             showDebugTools();
+                            debugClr();
                         }
                     }
                     return true;
