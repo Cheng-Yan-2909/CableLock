@@ -33,13 +33,15 @@ public class AlarmPlayer {
 
     public void soundAlarm() {
         try {
-            AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
-            audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 20, AudioManager.FLAG_VIBRATE);
+            if( null == ringtone ) {
+                AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
+                audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 20, AudioManager.FLAG_VIBRATE);
 
-            ringtone = RingtoneManager.getRingtone(mainActivity.getApplicationContext(),
-                    RingtoneManager.getDefaultUri(UIHandler.getInstance().getAlarmName()));
-            ringtone.setLooping(true);
-            ringtone.play();
+                ringtone = RingtoneManager.getRingtone(mainActivity.getApplicationContext(),
+                        RingtoneManager.getDefaultUri(UIHandler.getInstance().getAlarmName()));
+                ringtone.setLooping(true);
+                ringtone.play();
+            }
         } catch (Exception e) {
             stopAlert();
             e.printStackTrace();

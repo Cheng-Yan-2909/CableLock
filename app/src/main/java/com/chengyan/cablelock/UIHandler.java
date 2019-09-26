@@ -81,6 +81,7 @@ public class UIHandler {
             public void onClick(View view) {
                 AlarmPlayer.getInstance().stopAlert();
                 stopButton.setEnabled(false);
+                WifiEventHandler.getInstance().resetMissingWifiSsidCount();
             }
         });
     }
@@ -189,7 +190,7 @@ public class UIHandler {
     }
 
     private class AlarmTriggerBy implements WifiEventHandler.WifiUpdateListener {
-        private int position = -1;
+        private int position;
         private String alarmByName;
         private List<String> alarmByNameList = null;
         private boolean wifiDataAdded = false;
@@ -204,7 +205,7 @@ public class UIHandler {
         private void resetAlarmTriggerByList() {
             alarmByNameList = new ArrayList<String>(){{add("USB");}};
             wifiDataAdded = false;
-            position = -1;
+            position = 0;
         }
 
         public void updateWifiData(List<ScanResult> optionList) {

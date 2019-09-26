@@ -191,7 +191,7 @@ public class WifiEventHandler extends EventHandler {
             }
         }
 
-        if( !UIHandler.getInstance().isAlarmByUsb() && ssidFound ) {
+        if( !UIHandler.getInstance().isAlarmByUsb() && !ssidFound ) {
             missingWifiSsidCount++;
         }
 
