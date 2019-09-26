@@ -18,7 +18,6 @@ public class WifiEventHandler extends EventHandler {
     private final static int PERMISSION_CODE = 1;
     private static WifiEventHandler self = null;
     private final WifiManager wifiManager;
-    private int missingWifiSsidCount = 0;
     private WifiUpdateListener wifiUpdateListener = null;
 
     private static final String[] permissionNameList = new String[] {
@@ -41,10 +40,6 @@ public class WifiEventHandler extends EventHandler {
         }
 
         return self;
-    }
-
-    public void resetMissingWifiSsidCount() {
-        missingWifiSsidCount = 0;
     }
 
     public void updateUI(WifiUpdateListener wifiUpdateListener) {
@@ -180,29 +175,32 @@ public class WifiEventHandler extends EventHandler {
         UIHandler.debugln( "wifi info toString:\n" + wifiInfo + "\n==============\n" );
     }
 
-    private void processScanResult() {
-        List<ScanResult> scanResults = wifiManager.getScanResults();
-        UIHandler.debugln("WiFi result:");
+    private boolean shouldAlarmByMissingSsid(List<ScanResult> scanResults) {
         boolean ssidFound = false;
+        UIHandler.debugln("WiFi result:");
         for(ScanResult sr : scanResults) {
-            UIHandler.debugln(sr.SSID + " -- " + sr.toString() + "\n==============");
+            UIHandler.debug(sr.SSID + " -- " + sr.toString() + "... ");
             if( sr.SSID.equals(UIHandler.getInstance().getAlarmByName()) ) {
+                UIHandler.debugln("found!");
                 ssidFound = true;
+            }
+            else {
+                UIHandler.debugln("not it!");
             }
         }
 
-        if( !UIHandler.getInstance().isAlarmByUsb() && !ssidFound ) {
-            missingWifiSsidCount++;
-        }
+        UIHandler.debugln("=================\nalarm by: " + UIHandler.getInstance().getAlarmByName());
 
-        UIHandler.debugln("alarm by: " + UIHandler.getInstance().getAlarmByName());
-        UIHandler.debugln("missingWifiSsidCount: " + missingWifiSsidCount);
+        return !UIHandler.getInstance().isAlarmByUsb() && !ssidFound;
+    }
 
+    private void processScanResult() {
+        List<ScanResult> scanResults = wifiManager.getScanResults();
         if( null != wifiUpdateListener ) {
             wifiUpdateListener.updateWifiData( scanResults );
         }
 
-        if( missingWifiSsidCount > 1 ) {
+        if( shouldAlarmByMissingSsid(scanResults) ) {
             playAudio();
         }
     }
