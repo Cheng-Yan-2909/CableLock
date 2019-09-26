@@ -1,9 +1,6 @@
 package com.chengyan.cablelock;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 
@@ -22,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         UsbEventHandler.init(this);
         WifiEventHandler.init(this);
 
-        WifiEventHandler.getInstance().updateUI();
+        UIHandler.getInstance().updateAlarmByWifiNames();
     }
 
     @Override
@@ -30,15 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         UIHandler.getInstance().setupAlarmSelection();
-
-        if( WifiEventHandler.getInstance().gotAllPermissions() ) {
-            WifiEventHandler.getInstance().requestWifiScan();
-        }
-        else {
-            WifiEventHandler.getInstance().configPermission();
-        }
-
-        WifiEventHandler.getInstance().updateUI();
+        UIHandler.getInstance().updateAlarmByWifiNames();
     }
 
     @Override

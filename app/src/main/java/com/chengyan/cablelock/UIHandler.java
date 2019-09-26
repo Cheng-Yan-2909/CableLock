@@ -2,19 +2,15 @@ package com.chengyan.cablelock;
 
 import android.media.RingtoneManager;
 import android.net.wifi.ScanResult;
-import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +28,7 @@ public class UIHandler {
     private DebugStuff debugStuff = null;
     private AlarmTriggerBy alarmTriggerBy = null;
     private TitleText titleText = null;
+
     private static UIHandler self = null;
 
     public static void debug(String s) {
@@ -101,7 +98,8 @@ public class UIHandler {
                 else {
                     enableButton.setText("Alarm Enabled");
                     alarmEnabled = true;
-                    WifiEventHandler.getInstance().requestWifiScan();
+                    alarmTriggerBy.resetAlarmTriggerByList();
+                    updateAlarmByWifiNames();
                 }
             }
         });
@@ -131,8 +129,8 @@ public class UIHandler {
         return alarmTriggerBy.isAlarmByUsb();
     }
 
-    public void updateAlarmByWifiNames(List<ScanResult> optionList) {
-        alarmTriggerBy.update(optionList);
+    public void updateAlarmByWifiNames() {
+        WifiEventHandler.getInstance().updateUI(alarmTriggerBy);
     }
 
     private void showDebugTools() {
@@ -190,31 +188,47 @@ public class UIHandler {
         }
     }
 
-    private class AlarmTriggerBy {
-        private int position;
+    private class AlarmTriggerBy implements WifiEventHandler.WifiUpdateListener {
+        private int position = -1;
         private String alarmByName;
+        private List<String> alarmByNameList = null;
+        private boolean wifiDataAdded = false;
+        private Spinner alarmBySelector;
 
         private AlarmTriggerBy() {
-            updateAlarmOptionSelector(new ArrayList<String>(){{add("USB");}});
+            resetAlarmTriggerByList();
+            updateAlarmOptionSelector();
+            setupAlarmOptionListener();
         }
 
-        private void update(List<ScanResult> optionList) {
-            List<String> ssidList = new ArrayList();
-            for(ScanResult sr : optionList) {
-                ssidList.add(sr.SSID);
+        private void resetAlarmTriggerByList() {
+            alarmByNameList = new ArrayList<String>(){{add("USB");}};
+            wifiDataAdded = false;
+            position = -1;
+        }
+
+        public void updateWifiData(List<ScanResult> optionList) {
+            if( !wifiDataAdded ) {
+                for (ScanResult sr : optionList) {
+                    alarmByNameList.add(sr.SSID);
+                    wifiDataAdded = true;
+                }
             }
-            updateAlarmOptionSelector(ssidList);
+            updateAlarmOptionSelector();
         }
 
-        private void updateAlarmOptionSelector(List<String> optionList) {
-            Spinner alarmBySelector = (Spinner) mainActivity.findViewById(R.id.AlarmBy);
+        private void updateAlarmOptionSelector() {
+            alarmBySelector = (Spinner) mainActivity.findViewById(R.id.AlarmBy);
             ArrayAdapter<CharSequence> valueAdapter = new ArrayAdapter<CharSequence>(mainActivity, android.R.layout.simple_spinner_item);
-            valueAdapter.add( "USB" );
-            for(String name : optionList ) {
-                valueAdapter.add( name );
-            }
+            valueAdapter.addAll(alarmByNameList);
             alarmBySelector.setAdapter(valueAdapter);
 
+            if (position > 0) {
+                alarmBySelector.setSelection(position);
+            }
+        }
+
+        private void setupAlarmOptionListener() {
             AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected (AdapterView<?> parent, View view, int _position_, long id) {
                     position = _position_;

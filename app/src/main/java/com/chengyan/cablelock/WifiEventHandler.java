@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import androidx.core.app.ActivityCompat;
@@ -21,7 +19,7 @@ public class WifiEventHandler extends EventHandler {
     private static WifiEventHandler self = null;
     private final WifiManager wifiManager;
     private int missingWifiSsidCount = 0;
-    private List<ScanResult> scanResults;
+    private WifiUpdateListener wifiUpdateListener = null;
 
     private static final String[] permissionNameList = new String[] {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -49,15 +47,9 @@ public class WifiEventHandler extends EventHandler {
         missingWifiSsidCount = 0;
     }
 
-    public void updateUI() {
-        try {
-            if( null != scanResults ) {
-                UIHandler.getInstance().updateAlarmByWifiNames(scanResults);
-            }
-        }
-        catch(ObjectNotInitializedException e) {
-            UIHandler.debugln("UIHandler not initialized");
-        }
+    public void updateUI(WifiUpdateListener wifiUpdateListener) {
+        this.wifiUpdateListener = wifiUpdateListener;
+        requestWifiScan();
     }
 
     public void requestWifiScan() {
@@ -189,7 +181,7 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void processScanResult() {
-        scanResults = wifiManager.getScanResults();
+        List<ScanResult> scanResults = wifiManager.getScanResults();
         UIHandler.debugln("WiFi result:");
         boolean ssidFound = false;
         for(ScanResult sr : scanResults) {
@@ -206,8 +198,16 @@ public class WifiEventHandler extends EventHandler {
         UIHandler.debugln("alarm by: " + UIHandler.getInstance().getAlarmByName());
         UIHandler.debugln("missingWifiSsidCount: " + missingWifiSsidCount);
 
+        if( null != wifiUpdateListener ) {
+            wifiUpdateListener.updateWifiData( scanResults );
+        }
+
         if( missingWifiSsidCount > 1 ) {
             playAudio();
         }
+    }
+
+    public interface WifiUpdateListener {
+        void updateWifiData(List<ScanResult> scanResults);
     }
 }
