@@ -8,7 +8,7 @@ import android.os.Handler;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Handler deviceConnectivityHandler = null;
+    private Handler wifiConnectivityHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        deviceConnectivityHandler = new DeviceConnectivityHandler(this);
+        wifiConnectivityHandler = new WiFiConnectivityHandler(this);
+        wifiConnectivityHandler.startImmediately();
         super.onPostCreate(savedInstanceState);
     }
 
     @Override
     protected void onStop() {
-
+        wifiConnectivityHandler.stopImmediately();
         super.onStop();
     }
 
     @Override
     protected void onPostResume() {
-        if( null == deviceConnectivityHandler ) {
-            deviceConnectivityHandler = new DeviceConnectivityHandler(this);
+        if( null == wifiConnectivityHandler) {
+            wifiConnectivityHandler = new WiFiConnectivityHandler(this);
+            wifiConnectivityHandler.startImmediately();
         }
         super.onPostResume();
     }

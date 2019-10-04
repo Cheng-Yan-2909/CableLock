@@ -42,7 +42,7 @@ public class WifiEventHandler extends EventHandler {
         return self;
     }
 
-    public void updateUI(WifiUpdateListener wifiUpdateListener) {
+    public void updateListener(WifiUpdateListener wifiUpdateListener) {
         this.wifiUpdateListener = wifiUpdateListener;
         requestWifiScan();
     }
@@ -199,6 +199,7 @@ public class WifiEventHandler extends EventHandler {
         if( null != wifiUpdateListener ) {
             wifiUpdateListener.updateWifiData( scanResults );
         }
+        wifiUpdateListener = null;
 
         if( shouldAlarmByMissingSsid(scanResults) ) {
             playAudio();

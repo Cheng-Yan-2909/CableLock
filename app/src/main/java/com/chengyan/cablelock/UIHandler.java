@@ -130,7 +130,7 @@ public class UIHandler {
     }
 
     public void updateAlarmByWifiNames() {
-        WifiEventHandler.getInstance().updateUI(alarmTriggerBy);
+        WifiEventHandler.getInstance().updateListener(alarmTriggerBy);
     }
 
     private void showDebugTools() {
@@ -257,10 +257,10 @@ public class UIHandler {
         private Button debugButton = null;
 
         private DebugStuff() {
-            stupDebug();
+            setupDebug();
         }
 
-        private void stupDebug() {
+        private void setupDebug() {
             setupDebugOutput();
             setupDebugButton();
         }
@@ -309,7 +309,7 @@ public class UIHandler {
                 return false;
             }
 
-            return true;
+            return (debug.getVisibility() == View.VISIBLE);
         }
 
         private void setupDebugButton() {
