@@ -1,12 +1,14 @@
 package com.chengyan.cablelock;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private Handler deviceConnectivityHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,26 @@ public class MainActivity extends AppCompatActivity {
         if (!WifiEventHandler.getInstance().onRequestPermissionsResult(requestCode, permissions, results)) {
             super.onRequestPermissionsResult(requestCode, permissions, results);
         }
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        deviceConnectivityHandler = new DeviceConnectivityHandler(this);
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onPostResume() {
+        if( null == deviceConnectivityHandler ) {
+            deviceConnectivityHandler = new DeviceConnectivityHandler(this);
+        }
+        super.onPostResume();
     }
 }
 
