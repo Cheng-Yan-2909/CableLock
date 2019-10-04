@@ -8,7 +8,7 @@ import android.os.Handler;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Handler wifiConnectivityHandler = null;
+    private WiFiConnectivityHandler wifiConnectivityHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
