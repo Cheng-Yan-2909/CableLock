@@ -48,6 +48,7 @@ public class WifiEventHandler extends EventHandler {
     }
 
     public void requestWifiScan() {
+        UIHandler.debugClr();
         UIHandler.debugln("ID: " + Build.ID);
         UIHandler.debugln("MODEL: " + Build.MODEL);
         UIHandler.debugln("DISPLAY: " + Build.DISPLAY);
