@@ -233,6 +233,7 @@ public class UIHandler {
                 public void onItemSelected (AdapterView<?> parent, View view, int _position_, long id) {
                     position = _position_;
                     alarmByName = (String) parent.getItemAtPosition(position);
+                    WifiEventHandler.getInstance().clear();
                 }
 
                 public void onNothingSelected (AdapterView<?> parent) {

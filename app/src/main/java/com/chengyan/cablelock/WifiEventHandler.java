@@ -19,6 +19,7 @@ public class WifiEventHandler extends EventHandler {
     private static WifiEventHandler self = null;
     private final WifiManager wifiManager;
     private WifiUpdateListener wifiUpdateListener = null;
+    private int missingSsidCount = 0;
 
     private static final String[] permissionNameList = new String[] {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -40,6 +41,10 @@ public class WifiEventHandler extends EventHandler {
         }
 
         return self;
+    }
+
+    public void clear() {
+        missingSsidCount = 0;
     }
 
     public void updateListener(WifiUpdateListener wifiUpdateListener) {
@@ -177,13 +182,13 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private boolean shouldAlarmByMissingSsid(List<ScanResult> scanResults) {
-        boolean ssidFound = false;
+        missingSsidCount++;
         UIHandler.debugln("WiFi result:");
         for(ScanResult sr : scanResults) {
             UIHandler.debug(sr.SSID + " -- " + sr.toString() + "... ");
             if( sr.SSID.equals(UIHandler.getInstance().getAlarmByName()) ) {
                 UIHandler.debugln("found!");
-                ssidFound = true;
+                missingSsidCount--;
             }
             else {
                 UIHandler.debugln("not it!");
@@ -192,7 +197,7 @@ public class WifiEventHandler extends EventHandler {
 
         UIHandler.debugln("=================\nalarm by: " + UIHandler.getInstance().getAlarmByName());
 
-        return !UIHandler.getInstance().isAlarmByUsb() && !ssidFound;
+        return !UIHandler.getInstance().isAlarmByUsb() && (missingSsidCount > 1);
     }
 
     private void processScanResult() {

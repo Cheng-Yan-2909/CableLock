@@ -16,8 +16,6 @@ public class WiFiConnectivityHandler extends Handler implements WifiEventHandler
 
     public static final long START_IMMEDIATELY = 500;
 
-    public static final long EXTENDED_HANDLER_FREQUENCY = 10000;
-
     private boolean handlerEnabled = true;
 
     public WiFiConnectivityHandler(MainActivity mainActivity) {
@@ -30,12 +28,9 @@ public class WiFiConnectivityHandler extends Handler implements WifiEventHandler
             return;
         }
 
-        long nextCallTime = EXTENDED_HANDLER_FREQUENCY;
         if( !UIHandler.getInstance().isAlarmByUsb() && UIHandler.getInstance().isAlarmEnabled() ) {
             WifiEventHandler.getInstance().updateListener(this);
-            nextCallTime = HANDLER_FREQUENCY;
         }
-        sendEmptyMessageDelayed(MESSAGE_ID, nextCallTime);
     }
 
     public void startImmediately() {
@@ -45,7 +40,7 @@ public class WiFiConnectivityHandler extends Handler implements WifiEventHandler
 
     @Override
     public void updateWifiData(List<ScanResult> scanResults) {
-
+        sendEmptyMessageDelayed(MESSAGE_ID, HANDLER_FREQUENCY);
     }
 
     public void stopImmediately() {
