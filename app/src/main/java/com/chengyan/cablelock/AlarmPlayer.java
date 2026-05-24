@@ -36,7 +36,7 @@ public class AlarmPlayer {
         try {
             if( null == ringtone ) {
                 AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
-                audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 20, AudioManager.FLAG_VIBRATE);
+                audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 80, AudioManager.FLAG_VIBRATE);
 
                 ringtone = RingtoneManager.getRingtone(mainActivity.getApplicationContext(),
                         RingtoneManager.getDefaultUri(UIHandler.getInstance().getAlarmName()));

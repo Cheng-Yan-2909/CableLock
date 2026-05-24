@@ -26,8 +26,6 @@ public class WifiEventHandler extends EventHandler {
     private WifiUpdateListener wifiUpdateListener = null;
     private int missingSsidCount = 0;
 
-    private Context context = null;
-
     private static final String[] permissionNameList = new String[] {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.CHANGE_WIFI_STATE,
@@ -133,11 +131,9 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void setupWifiScanResultReceiver() {
-        WifiEventHandler wifiEventHandler = this;
         BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
-                wifiEventHandler.context = c;
                 UIHandler.debugln(intent.getAction());
                 processScanResult();
             }
@@ -210,8 +206,7 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void processScanResult() {
-        if(this.context == null) return;
-        if (ActivityCompat.checkSelfPermission(this.context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mainActivity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
