@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.os.Build;
 
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
 
@@ -39,7 +40,9 @@ public class AlarmPlayer {
 
                 ringtone = RingtoneManager.getRingtone(mainActivity.getApplicationContext(),
                         RingtoneManager.getDefaultUri(UIHandler.getInstance().getAlarmName()));
-                ringtone.setLooping(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    ringtone.setLooping(true);
+                }
                 ringtone.play();
             }
         } catch (Exception e) {
