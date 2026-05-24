@@ -1,17 +1,22 @@
 package com.chengyan.cablelock;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
-import androidx.core.app.ActivityCompat;
-import com.chengyan.cablelock.exception.ObjectNotInitializedException;
-import java.util.List;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.chengyan.cablelock.exception.ObjectNotInitializedException;
+
+import java.util.List;
 
 public class WifiEventHandler extends EventHandler {
 
@@ -21,11 +26,13 @@ public class WifiEventHandler extends EventHandler {
     private WifiUpdateListener wifiUpdateListener = null;
     private int missingSsidCount = 0;
 
+    private Context context = null;
+
     private static final String[] permissionNameList = new String[] {
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.CHANGE_WIFI_STATE,
-            android.Manifest.permission.ACCESS_WIFI_STATE,
-            android.Manifest.permission.ACCESS_NETWORK_STATE
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.ACCESS_NETWORK_STATE
     };
 
     public static WifiEventHandler init(MainActivity mainActivity) {
@@ -65,7 +72,7 @@ public class WifiEventHandler extends EventHandler {
         configPermission();
 
         try {
-            if (!wifiManager.startScan()) {
+            if (!wifiManager.isScanAlwaysAvailable()) {
                 UIHandler.debugln("WifFi scan failed 2");
             }
             else {
@@ -98,7 +105,7 @@ public class WifiEventHandler extends EventHandler {
                 processScanResult();
             }
         };
-        mainActivity.registerReceiver(wifiEventReceiver, new IntentFilter(WifiManager.NETWORK_IDS_CHANGED_ACTION));
+        ContextCompat.registerReceiver(mainActivity, wifiEventReceiver, new IntentFilter(WifiManager.NETWORK_IDS_CHANGED_ACTION), ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 
     private void setupNetworkStateChangedReceiver() {
@@ -126,9 +133,11 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void setupWifiScanResultReceiver() {
+        WifiEventHandler wifiEventHandler = this;
         BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
+                wifiEventHandler.context = c;
                 UIHandler.debugln(intent.getAction());
                 processScanResult();
             }
@@ -150,9 +159,9 @@ public class WifiEventHandler extends EventHandler {
 
     public void configPermission() {
         if (gotAllPermissions()) {
-            UIHandler.debugln(android.Manifest.permission.CHANGE_WIFI_STATE + ": Permission granted");
+            UIHandler.debugln(Manifest.permission.CHANGE_WIFI_STATE + ": Permission granted");
         } else {
-            UIHandler.debugln(android.Manifest.permission.CHANGE_WIFI_STATE + ": Permission denied");
+            UIHandler.debugln(Manifest.permission.CHANGE_WIFI_STATE + ": Permission denied");
             ActivityCompat.requestPermissions(mainActivity, permissionNameList, PERMISSION_CODE);
         }
     }
@@ -201,14 +210,25 @@ public class WifiEventHandler extends EventHandler {
     }
 
     private void processScanResult() {
-        List<ScanResult> scanResults = wifiManager.getScanResults();
-        if( null != wifiUpdateListener ) {
-            wifiUpdateListener.updateWifiData( scanResults );
-        }
-        wifiUpdateListener = null;
+        if(this.context == null) return;
+        if (ActivityCompat.checkSelfPermission(this.context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
 
-        if( shouldAlarmByMissingSsid(scanResults) ) {
-            playAudio();
+            List<ScanResult> scanResults = wifiManager.getScanResults();
+            if (null != wifiUpdateListener) {
+                wifiUpdateListener.updateWifiData(scanResults);
+            }
+            wifiUpdateListener = null;
+
+            if (shouldAlarmByMissingSsid(scanResults)) {
+                playAudio();
+            }
         }
     }
 

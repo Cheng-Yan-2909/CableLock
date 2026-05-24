@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,15 +34,18 @@ public class UIHandler {
     private static UIHandler self = null;
 
     public static void debug(String s) {
-        self.debugStuff.debug(s);
+        if( self == null ) return;
+        if( self.debugStuff != null) self.debugStuff.debug(s);
     }
 
     public static void debugln(String s) {
-        self.debugStuff.debugln(s);
+        if( self == null ) return;
+        if( self.debugStuff != null) self.debugStuff.debugln(s);
     }
 
     public static void debugClr() {
-        self.debugStuff.debugClr();
+        if( self == null ) return;
+        if( self.debugStuff != null) self.debugStuff.debugClr();
     }
 
     public static UIHandler init(MainActivity mainActivity) {

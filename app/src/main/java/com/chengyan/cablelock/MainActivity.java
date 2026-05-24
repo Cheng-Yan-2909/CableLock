@@ -1,22 +1,21 @@
 package com.chengyan.cablelock;
 
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Handler;
-
 
 public class MainActivity extends AppCompatActivity {
-
     private WiFiConnectivityHandler wifiConnectivityHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         UIHandler.init(this);
-
         AlarmPlayer.init(this);
         UsbEventHandler.init(this);
         WifiEventHandler.init(this);
@@ -61,5 +60,3 @@ public class MainActivity extends AppCompatActivity {
         super.onPostResume();
     }
 }
-
-
