@@ -28,6 +28,7 @@ public class UIHandler {
 
     private UserAlarmOption userAlarmOption = null;
     private DebugStuff debugStuff = null;
+    private boolean enable_debugStuff = false;
     private AlarmTriggerBy alarmTriggerBy = null;
     private TitleText titleText = null;
 
@@ -330,12 +331,12 @@ public class UIHandler {
                     }
                 }
             });
-            debugButton.setVisibility(View.VISIBLE);
+            debugButton.setVisibility(enable_debugStuff ? View.VISIBLE : View.INVISIBLE);
         }
 
         private void setupDebugOutput() {
             debug = mainActivity.findViewById(R.id.DebugOutput);
-            debug.setVisibility(View.VISIBLE);
+            debug.setVisibility(enable_debugStuff ? View.VISIBLE : View.INVISIBLE);
         }
     }
 

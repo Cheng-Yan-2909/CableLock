@@ -33,26 +33,30 @@ public class AlarmPlayer {
         this.mainActivity = mainActivity;
     }
 
+    private void alarmLogger(String msg) {
+        Log.i(this.getClass().getName(), msg);
+        UIHandler.debug(this.getClass().getName() + msg + "\n");
+    }
     public void soundAlarm() {
         try {
-            Log.i(this.getClass().getName(), "Sound alarm");
+            alarmLogger("Sound alarm");
             if( null == ringtone ) {
-                Log.i(this.getClass().getName(), "Get ringtone");
+                alarmLogger("Get ringtone");
                 AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
                 audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 80, AudioManager.FLAG_VIBRATE);
 
                 ringtone = RingtoneManager.getRingtone(mainActivity.getApplicationContext(),
                         RingtoneManager.getDefaultUri(UIHandler.getInstance().getAlarmName()));
-                Log.i(this.getClass().getName(), "Ringtone: " + ringtone.toString());
+                alarmLogger("Ringtone: " + ringtone.toString());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    Log.i(this.getClass().getName(), " -- set looping");
+                    alarmLogger(" -- set looping");
                     ringtone.setLooping(true);
                 }
                 ringtone.play();
-                Log.i(this.getClass().getName(), "Alarm sounded");
+                alarmLogger("Alarm sounded");
             }
         } catch (Exception e) {
-            Log.i(this.getClass().getName(), "Failed to sound alarm: " + e.toString());
+            alarmLogger("Failed to sound alarm: " + e.toString());
             stopAlert();
             e.printStackTrace();
         }
