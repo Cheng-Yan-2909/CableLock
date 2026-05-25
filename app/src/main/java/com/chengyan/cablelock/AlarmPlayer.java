@@ -7,6 +7,7 @@ import android.media.RingtoneManager;
 import android.os.Build;
 
 import com.chengyan.cablelock.exception.ObjectNotInitializedException;
+import android.util.Log;
 
 public class AlarmPlayer {
 
@@ -34,18 +35,24 @@ public class AlarmPlayer {
 
     public void soundAlarm() {
         try {
+            Log.i(this.getClass().getName(), "Sound alarm");
             if( null == ringtone ) {
+                Log.i(this.getClass().getName(), "Get ringtone");
                 AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
                 audioManager.setStreamVolume(AudioManager.RINGER_MODE_VIBRATE, 80, AudioManager.FLAG_VIBRATE);
 
                 ringtone = RingtoneManager.getRingtone(mainActivity.getApplicationContext(),
                         RingtoneManager.getDefaultUri(UIHandler.getInstance().getAlarmName()));
+                Log.i(this.getClass().getName(), "Ringtone: " + ringtone.toString());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    Log.i(this.getClass().getName(), " -- set looping");
                     ringtone.setLooping(true);
                 }
                 ringtone.play();
+                Log.i(this.getClass().getName(), "Alarm sounded");
             }
         } catch (Exception e) {
+            Log.i(this.getClass().getName(), "Failed to sound alarm: " + e.toString());
             stopAlert();
             e.printStackTrace();
         }

@@ -330,12 +330,12 @@ public class UIHandler {
                     }
                 }
             });
-            debugButton.setVisibility(View.INVISIBLE);
+            debugButton.setVisibility(View.VISIBLE);
         }
 
         private void setupDebugOutput() {
             debug = mainActivity.findViewById(R.id.DebugOutput);
-            debug.setVisibility(View.INVISIBLE);
+            debug.setVisibility(View.VISIBLE);
         }
     }
 

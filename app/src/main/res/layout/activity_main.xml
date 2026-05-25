@@ -151,7 +151,8 @@
         app:layout_constraintHorizontal_bias="0.565"
         app:layout_constraintStart_toEndOf="@+id/StopButton"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.079"
+        tools:visibility="visible" />
 
     <Spinner
         android:id="@+id/AlarmBy"
